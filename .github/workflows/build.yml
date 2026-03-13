@@ -1,11 +1,18 @@
 name: Build Electron App
 
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+  # 手动触发发布
   workflow_dispatch:
+    inputs:
+      release:
+        description: '是否创建 Release'
+        required: true
+        default: 'true'
+        type: boolean
+  # 打 tag 时自动触发
+  push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
@@ -78,9 +85,26 @@ jobs:
   release:
     needs: [build-mac, build-windows]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from package.json
+        id: version
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog for current version
+        id: changelog
+        run: |
+          # 提取当前版本的 changelog 内容
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          CHANGELOG=$(awk "/## \[${VERSION}\]/{flag=1; next} /## \[/{flag=0} flag" CHANGELOG.md)
+          # 处理多行输出
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Download macOS artifact
         uses: actions/download-artifact@v4
         with:
@@ -96,15 +120,21 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ github.run_number }}
-          name: Build ${{ github.run_number }}
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          name: v${{ steps.version.outputs.VERSION }}
           body: |
-            Automated build from commit ${{ github.sha }}
+            ## DeepSeek Chat v${{ steps.version.outputs.VERSION }}
             
-            ## Downloads
-            - **macOS (Intel)**: DeepSeek Chat-x64.dmg
-            - **macOS (Apple Silicon M1/M2/M3)**: DeepSeek Chat-arm64.dmg
-            - **Windows**: DeepSeek Chat.exe
+            ${{ steps.changelog.outputs.CHANGELOG }}
+            
+            ---
+            
+            ### 下载
+            - **macOS (Intel)**: `DeepSeek Chat-${{ steps.version.outputs.VERSION }}-x64.dmg`
+            - **macOS (Apple Silicon M1/M2/M3)**: `DeepSeek Chat-${{ steps.version.outputs.VERSION }}-arm64.dmg`
+            - **Windows**: `DeepSeek Chat ${{ steps.version.outputs.VERSION }}.exe`
+            
+            > macOS 用户首次打开需要在「系统设置 → 隐私与安全性」中允许运行
           files: |
             artifacts/mac/*.dmg
             artifacts/win/*.exe

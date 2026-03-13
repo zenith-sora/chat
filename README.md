@@ -6,7 +6,8 @@
 
 从 [Releases 页面](../../releases/latest) 下载最新版本：
 
-- **macOS**: `DeepSeek Chat-*.dmg`
+- **macOS (Intel)**: `DeepSeek Chat-*-x64.dmg`
+- **macOS (Apple Silicon)**: `DeepSeek Chat-*-arm64.dmg`
 - **Windows**: `DeepSeek Chat *.exe`
 
 ## 使用方法
@@ -41,6 +42,19 @@ pnpm run build:linux  # Linux
 - Electron 28
 - 原生 HTML/CSS/JS
 - DeepSeek API
+
+## 发版流程
+
+1. 更新 `package.json` 中的 `version`
+2. 更新 `CHANGELOG.md` 记录本次变更
+3. 提交代码并打 tag：
+   ```bash
+   git add .
+   git commit -m "Release v1.0.1"
+   git tag v1.0.1
+   git push && git push --tags
+   ```
+4. GitHub Actions 会自动构建并创建 Release
 
 ## License
 
