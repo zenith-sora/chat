@@ -1,6 +1,6 @@
 {
   "name": "deepseek-chat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "DeepSeek Chat Desktop App",
   "author": "2oops",
   "main": "main.js",
