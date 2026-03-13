@@ -102,7 +102,8 @@ jobs:
             Automated build from commit ${{ github.sha }}
             
             ## Downloads
-            - **macOS**: DeepSeek Chat.dmg
+            - **macOS (Intel)**: DeepSeek Chat-x64.dmg
+            - **macOS (Apple Silicon M1/M2/M3)**: DeepSeek Chat-arm64.dmg
             - **Windows**: DeepSeek Chat.exe
           files: |
             artifacts/mac/*.dmg

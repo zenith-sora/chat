@@ -23,7 +23,12 @@
       "index.html"
     ],
     "mac": {
-      "target": "dmg",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
       "icon": null
     },
     "win": {
