@@ -1,20 +1,20 @@
 # Changelog
 
-所有版本的更新记录都在这里。
+All notable changes to this project will be documented in this file.
 
-格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
-版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.0.1] - 2026-03-13
 
-### Features
-- 规范tag发包版本管理流程
+### Added
+- Standardized tag-based release workflow
 
 ## [1.0.0] - 2026-03-13
 
-### Features
-- 初始版本发布
-- DeepSeek API 聊天功能
-- 暗黑主题 UI
-- API Key 本地保存
-- 支持 macOS (Intel & Apple Silicon) 和 Windows
+### Added
+- Initial release
+- DeepSeek API chat functionality
+- Dark theme UI
+- Local API Key storage
+- Support for macOS (Intel & Apple Silicon) and Windows

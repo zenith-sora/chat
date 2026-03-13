@@ -1,60 +1,74 @@
 # DeepSeek Chat
 
-一个简洁的 DeepSeek AI 聊天桌面应用，基于 Electron 构建。
+A simple DeepSeek AI chat desktop application built with Electron.
 
-## 下载
+## Download
 
-从 [Releases 页面](../../releases/latest) 下载最新版本：
+Download the latest version from [Releases](../../releases/latest):
 
 - **macOS (Intel)**: `DeepSeek Chat-*-x64.dmg`
 - **macOS (Apple Silicon)**: `DeepSeek Chat-*-arm64.dmg`
 - **Windows**: `DeepSeek Chat *.exe`
 
-## 使用方法
+### macOS Installation Note
 
-1. 下载并安装应用
-2. 输入你的 DeepSeek API Key（首次使用）
-3. 开始聊天！
-
-> API Key 会保存在本地，下次打开无需重新输入。
-
-## 获取 API Key
-
-访问 [DeepSeek 开放平台](https://platform.deepseek.com/) 注册并获取 API Key。
-
-## 本地开发
+Since the app is not signed with an Apple Developer certificate, macOS will block it by default. To open the app, run this command in Terminal:
 
 ```bash
-# 安装依赖
+xattr -cr /Applications/DeepSeek\ Chat.app
+```
+
+Or if downloaded to Downloads folder:
+
+```bash
+xattr -cr ~/Downloads/DeepSeek\ Chat.app
+```
+
+## Usage
+
+1. Download and install the app
+2. Enter your DeepSeek API Key (first time only)
+3. Start chatting!
+
+> Your API Key is saved locally and won't need to be re-entered.
+
+## Get API Key
+
+Visit [DeepSeek Platform](https://platform.deepseek.com/) to register and get your API Key.
+
+## Development
+
+```bash
+# Install dependencies
 pnpm install
 
-# 运行开发版本
+# Run development version
 pnpm start
 
-# 打包
+# Build
 pnpm run build:mac    # macOS
 pnpm run build:win    # Windows
 pnpm run build:linux  # Linux
 ```
 
-## 技术栈
+## Tech Stack
 
 - Electron 28
-- 原生 HTML/CSS/JS
+- Vanilla HTML/CSS/JS
 - DeepSeek API
 
-## 发版流程
+## Release Process
 
-1. 更新 `package.json` 中的 `version`
-2. 更新 `CHANGELOG.md` 记录本次变更
-3. 提交代码并打 tag：
+1. Update `version` in `package.json`
+2. Update `CHANGELOG.md` with changes
+3. Commit and tag:
    ```bash
    git add .
    git commit -m "Release v1.0.1"
    git tag v1.0.1
    git push && git push --tags
    ```
-4. GitHub Actions 会自动构建并创建 Release
+4. GitHub Actions will automatically build and create a Release
 
 ## License
 

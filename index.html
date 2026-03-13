@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -184,22 +184,22 @@
 </head>
 <body>
   <div class="header">
-    <h1>🤖 DeepSeek Chat</h1>
+    <h1>DeepSeek Chat</h1>
     <div class="api-key-input">
-      <input type="password" id="apiKey" placeholder="输入 DeepSeek API Key...">
+      <input type="password" id="apiKey" placeholder="Enter DeepSeek API Key...">
     </div>
   </div>
 
   <div class="chat-container" id="chatContainer">
     <div class="welcome">
-      <h2>欢迎使用 DeepSeek Chat</h2>
-      <p>请输入你的 API Key，然后开始对话</p>
+      <h2>Welcome to DeepSeek Chat</h2>
+      <p>Enter your API Key to start chatting</p>
     </div>
   </div>
 
   <div class="input-area">
-    <textarea id="messageInput" placeholder="输入消息... (Enter 发送, Shift+Enter 换行)" rows="1"></textarea>
-    <button id="sendBtn">发送</button>
+    <textarea id="messageInput" placeholder="Type a message... (Enter to send, Shift+Enter for new line)" rows="1"></textarea>
+    <button id="sendBtn">Send</button>
   </div>
 
   <script>
@@ -211,46 +211,46 @@
     let messages = [];
     let isLoading = false;
 
-    // 加载保存的 API Key
+    // Load saved API Key
     const savedKey = localStorage.getItem('deepseek_api_key');
     if (savedKey) apiKeyInput.value = savedKey;
 
-    // 保存 API Key
+    // Save API Key
     apiKeyInput.addEventListener('change', () => {
       localStorage.setItem('deepseek_api_key', apiKeyInput.value);
     });
 
-    // 自动调整输入框高度
+    // Auto-resize input height
     messageInput.addEventListener('input', () => {
       messageInput.style.height = 'auto';
       messageInput.style.height = Math.min(messageInput.scrollHeight, 150) + 'px';
     });
 
-    // 发送消息
+    // Send message
     async function sendMessage() {
       const apiKey = apiKeyInput.value.trim();
       const content = messageInput.value.trim();
 
       if (!apiKey) {
-        alert('请先输入 API Key');
+        alert('Please enter your API Key first');
         apiKeyInput.focus();
         return;
       }
 
       if (!content || isLoading) return;
 
-      // 清除欢迎消息
+      // Clear welcome message
       const welcome = chatContainer.querySelector('.welcome');
       if (welcome) welcome.remove();
 
-      // 添加用户消息
+      // Add user message
       addMessage('user', content);
       messages.push({ role: 'user', content });
 
       messageInput.value = '';
       messageInput.style.height = 'auto';
 
-      // 显示加载状态
+      // Show loading state
       isLoading = true;
       sendBtn.disabled = true;
       const typingEl = document.createElement('div');
@@ -266,7 +266,7 @@
         messages.push({ role: 'assistant', content: response });
       } catch (error) {
         typingEl.remove();
-        addMessage('error', '错误: ' + error);
+        addMessage('error', 'Error: ' + error);
       }
 
       isLoading = false;

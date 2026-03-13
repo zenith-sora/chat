@@ -1,15 +1,15 @@
 name: Build Electron App
 
 on:
-  # 手动触发发布
+  # Manual trigger
   workflow_dispatch:
     inputs:
       release:
-        description: '是否创建 Release'
+        description: 'Create Release'
         required: true
         default: 'true'
         type: boolean
-  # 打 tag 时自动触发
+  # Trigger on tag push
   push:
     tags:
       - 'v*'
@@ -97,10 +97,10 @@ jobs:
       - name: Extract changelog for current version
         id: changelog
         run: |
-          # 提取当前版本的 changelog 内容
+          # Extract changelog content for current version
           VERSION="${{ steps.version.outputs.VERSION }}"
           CHANGELOG=$(awk "/## \[${VERSION}\]/{flag=1; next} /## \[/{flag=0} flag" CHANGELOG.md)
-          # 处理多行输出
+          # Handle multiline output
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -129,12 +129,12 @@ jobs:
             
             ---
             
-            ### 下载
+            ### Downloads
             - **macOS (Intel)**: `DeepSeek Chat-${{ steps.version.outputs.VERSION }}-x64.dmg`
             - **macOS (Apple Silicon M1/M2/M3)**: `DeepSeek Chat-${{ steps.version.outputs.VERSION }}-arm64.dmg`
             - **Windows**: `DeepSeek Chat ${{ steps.version.outputs.VERSION }}.exe`
             
-            > macOS 用户首次打开需要在「系统设置 → 隐私与安全性」中允许运行
+            > macOS users: Run `xattr -cr /Applications/DeepSeek\ Chat.app` in Terminal to open the app
           files: |
             artifacts/mac/*.dmg
             artifacts/win/*.exe
