@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1] - 2026-03-13
 
-### Added
+### Features
 - Standardized tag-based release workflow
 
 ## [1.0.0] - 2026-03-13
 
-### Added
+### Features
 - Initial release
 - DeepSeek API chat functionality
 - Dark theme UI
